@@ -327,9 +327,15 @@ function yimian__gugu($body){
 
 function gugu__send($ak, $userID, $memobirdID, $body){
 
-	$body = iconv("UTF-8","gbk//TRANSLIT",$body);
-	$url = "http://open.memobird.cn/home/printpaper";
-	return curl__post($url, array("ak" => $ak, "userID" => $userID, "memobirdID" => $memobirdID, "printcontent" => "T:".base64_encode($body)."", "timestamp" => "".time().""));
+    require 'memobird.php';
+    $m = new memobird($ak);
+    return $m->printPaper( "T:".base64_encode(iconv("UTF-8","gbk//TRANSLIT",$body))."", $memobirdID, $userID);
+
+
+
+	//$body = iconv("UTF-8","gbk//TRANSLIT",$body);
+	//$url = "http://open.memobird.cn/home/printpaper";
+	//return curl__post($url, array("ak" => $ak, "userID" => $userID, "memobirdID" => $memobirdID, "printcontent" => "T:".base64_encode($body)."", "timestamp" => "".time().""));
 }
 
 
